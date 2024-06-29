@@ -1,0 +1,15 @@
+- | [20240628 08:27:10.530] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Starting BpiMessageXxApplication using Java 17.0.2 on Cyber-Dragon with PID 7976 (D:\Java_program\lf-bpi-message-xx-test\target\classes started by godirc_wu in D:\Java_program\lf-bpi-message-xx-test)|
+- | [20240628 08:27:10.530] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> The following 1 profile is active: "dev"|
+- | [20240628 08:27:12.052] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Started BpiMessageXxApplication in 2.513 seconds (JVM running for 3.199)|
+- | [20240628 08:44:22.667] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Starting BpiMessageXxApplication using Java 17.0.2 on Cyber-Dragon with PID 24564 (D:\Java_program\lf-bpi-message-xx-test\target\classes started by godirc_wu in D:\Java_program\lf-bpi-message-xx-test)|
+- | [20240628 08:44:22.671] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> The following 1 profile is active: "dev"|
+- | [20240628 08:44:24.399] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Started BpiMessageXxApplication in 2.896 seconds (JVM running for 3.621)|
+- | [20240628 08:52:25.271] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Starting BpiMessageXxApplication using Java 17.0.2 on Cyber-Dragon with PID 19792 (D:\Java_program\lf-bpi-message-xx-test\target\classes started by godirc_wu in D:\Java_program\lf-bpi-message-xx-test)|
+- | [20240628 08:52:25.274] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> The following 1 profile is active: "dev"|
+- | [20240628 08:52:26.807] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Started BpiMessageXxApplication in 2.238 seconds (JVM running for 2.687)|
+- | [20240628 08:53:02.946] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Starting BpiMessageXxApplication using Java 17.0.2 on Cyber-Dragon with PID 21124 (D:\Java_program\lf-bpi-message-xx-test\target\classes started by godirc_wu in D:\Java_program\lf-bpi-message-xx-test)|
+- | [20240628 08:53:02.949] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> The following 1 profile is active: "dev"|
+- | [20240628 08:53:04.601] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Started BpiMessageXxApplication in 2.353 seconds (JVM running for 2.771)|
+- | [20240628 09:08:45.334] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Starting BpiMessageXxApplication using Java 17.0.2 on Cyber-Dragon with PID 23536 (D:\Java_program\lf-bpi-message-xx-test\target\classes started by godirc_wu in D:\Java_program\lf-bpi-message-xx-test)|
+- | [20240628 09:08:45.338] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> The following 1 profile is active: "dev"|
+- | [20240628 09:08:46.985] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Started BpiMessageXxApplication in 2.383 seconds (JVM running for 2.9)|

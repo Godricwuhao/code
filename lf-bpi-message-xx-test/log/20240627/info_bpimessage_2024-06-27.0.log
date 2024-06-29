@@ -1,0 +1,3 @@
+- | [20240627 21:42:01.269] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Starting BpiMessageXxApplication using Java 17.0.2 on Cyber-Dragon with PID 13108 (D:\Java_program\lf-bpi-message-xx\target\classes started by godirc_wu in D:\Java_program\lf-bpi-message-xx)|
+- | [20240627 21:42:01.272] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> The following 1 profile is active: "prod"|
+- | [20240627 21:42:02.866] | [INFO] | [com.unicom.BpiMessageXxApplication] | --> Started BpiMessageXxApplication in 2.39 seconds (JVM running for 2.898)|

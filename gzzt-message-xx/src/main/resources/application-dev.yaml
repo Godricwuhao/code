@@ -1,0 +1,60 @@
+server:
+  port: 18091
+
+# 日志配置
+logging:
+  prefix: bpimessage
+  level:
+    root: info
+
+# Kafka相关配置
+kafka:
+  # 听云kafka配置（消费埋点数据）
+  tingyunKafka:
+    bootstrap-servers: tingyun-2:9092
+    concurrency: 8
+    group-id: testnet1
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: PLAIN
+    sasl-jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="tingyun" password="nEtben@2_19";
+  # 外部系统kafka配置（西咸tingyun-prod集群）
+  xxKafka:
+    bootstrap-servers: 10.125.128.118:32010,10.125.10.51:32028,10.125.128.108:32002
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: SCRAM-SHA-256
+    sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tingyun-kafka-test" password="tingyun#2021";
+  # 听云广州Kafka配置
+  tingyunGzKafka:
+    bootstrap-servers: tingyun-2:9092
+    concurrency: 8
+    group-id: testnet2
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: PLAIN
+    sasl-jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="tingyun" password="nEtben@2_19";
+  #听云廊坊Kafka配置
+  tingyunLfKafka:
+    bootstrap-servers: 10.191.208.107:9092,10.191.208.108:9092,10.191.208.109:9092
+    concurrency: 12
+    group-id: group-xx-brs-bpi-message
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: PLAIN
+    sasl-jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="tingyun" password="nEtben@2_19";
+# 业务相关配置
+# 需求：联通APP基础服务弹窗数据推送西咸省分生产区
+basicServicAlert:
+  browserId: 2
+  topic: smart2push-test
+# 需求：广州环境（弹窗事件、自定义埋点）推送天明平台进行分析
+gzBpiServic:
+  cbssId: 1
+  topic: html5-topic-test
+  msgRegex: args0.replace(/为：\d{1,3}%/g,'低').replace(/timeout\<.*\>/g,'timeout').replace(/\{UNI_BSS_BODY.*/g,'').replace(/I\/O error.*/g,'').replace(/^成功向\d+ 交费【\d+】元/g,'成功向用户交费*元').replace(/^\【\d+\】当前用户为欠费状态，欠费金额为.*/g,'当前用户为欠费状态').replace(/^\$\$\$\d+\$\$\$用户已经欠费,欠费金额为：\d.*,建议终止业务的办理！是否要继续业务的办理？/g,'用户已经欠费,建议终止业务的办理！是否要继续业务的办理？').replace(/\(txid=.*\)/g,'').replace(/员工[a-zA-Z0-9-_]*/g,'员工*').replace(/,号码：\d{11}调用LCU异常.+|服务名称\s+cpp:\d+,12CRMException-\d+:?/g,'').replace(/\[TRANS_IDO：\d+\]|\[txid：\S+\^\d+\^\d+\]/g,'*').replace(/当前无此客户信息\{客户qcustid服务信息无数据.*/g,'当前无此客户信息{客户qcustid服务信息无数据}').replace(/用户资料不存在：用户号码.*/g,'用户资料不存在').replace(/TRANS_IDO.*一证五卡查询不支持该证件类型查询！请用有效的证件类型.*/g,'一证五卡查询不支持该证件类型查询！').replace(/^\用户号码:.*有欠费.*/g,'业务限制[号码有欠费]').replace(/.*请选择已销号进行查询\!\(服务号码.*/g,'没有该号码资料或该用户可能拆机，请选择已销号进行查询！').replace('$ASM_BACKFEE_OTHERPROVINCE,ASM_BACKFEE_OTHEREPARCHY','').replace(/【TRANS_ID：\d+】/g,'').replace(/\[*用户号码:\d{11},(业务|规则)限制:\[/g,'[').replace(/.*该用户存在组合关系，不能受理此业务，请到“融合变更”界面办理解绑.*/g,'该用户存在组合关系，不能受理此业务，请到“融合变更”界面办理解绑！').replace(/^调用资源中心业务异常,W010:库位校验未通.*/,'调用资源中心业务异常,W010:库位校验未通，员工*没有操作卡的权限').replace(/.*\[\$\$\$20001\$\$\$用户有在途订单，不允许受理.*/g,'[$$$20001$$$用户有在途订单，不允许受理').replace(/预提交前规则校验不通过，该笔流水\d+交付完工失败.*/g,'预提交前规则校验不通过，该笔流水交付完工失败，不允许撤单').replace(/预提交前规则校验不通过,此申请单【\d+】调用省份返回失败：通过dataex_intf服务调用省份检验返回失败，失败信息：失败/g,'预提交前规则校验不通过,此申请单调用省份返回失败：通过dataex_intf服务调用省份检验返回失败，失败信息：失败').replace(/TRANS_IDO.*RSP_DESC：身份证编码.*/g,'身份认证返回错误：证件号码与姓名不一致').replace(/^\[trades_compmsgassemble.*异常融合预提交调用服务trades\/pretrades\/preflow异常.*/g,'异常融合预提交调用服务trades/pretrades/preflow异常').replace(/SUBSCRIBE_ID\[\{\d+\}\],TRADE_ID\[\{\d+\}\]/g,'').replace(/:TRANS_IDO:.*_desc:/g,'').replace(/\|.*\[TRANS_IDO:.*\]$/g,'').replace(/^用户:074300213957|订单流水:\d+$/g,'').replace(/:TRANS_IDO：\d+RSP_DESC：/g,':').replace(/^调用trades\/pretradeplus\/preflow服务返回:/g,'').replace(/^\$\$\$\d+\$\$\$没有对应的账户信息.*账户标识=\d+\)/g,'没有对应的账户信息').replace(/^\[trades_sptradeinfo.*【|】\]\]\]$/g,'').replace(/^共.*条.*证件号码.*用户号码.*失败原因.{1}/g,'')
+
