@@ -1,0 +1,23 @@
+server:
+  port: 18092
+
+# 日志配置
+logging:
+  prefix: datapush
+  level:
+    root: info
+
+kafka:
+  xxKafka:
+    bootstrap-servers: 10.125.128.118:32010,10.125.10.51:32028,10.125.128.108:32002
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: SCRAM-SHA-256
+    sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tingyun-kafka-test" password="tingyun#2021";
+topic:
+  name: browser-ux-score
+information:
+  id:
+  token: c7024ad5ec7c096e53d35a1701fe01900dfa434d42352d78b157c99f7ded9f2664a0cb0d21ec8ec50f94e9101338a0afd636859fc1bae6bc0f7035962e919999
+  url: http://10.172.131.10:8080/browser-api/module/list?

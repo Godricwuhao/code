@@ -1,0 +1,46 @@
+server:
+  port: 18091
+
+# 日志配置
+logging:
+  prefix: bpimessage
+  level:
+    root: info
+
+# Kafka相关配置
+kafka:
+  # 听云kafka配置（消费埋点数据）
+  tingyunKafka:
+    bootstrap-servers: 10.189.28.24:32005,10.189.28.26:32005,10.189.28.27:32005
+    concurrency: 12
+    group-id: group-gz-brs-bpi-message
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: SCRAM-SHA-256
+    sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username="kafka-new" password="tingyun#2021";
+  # 外部系统kafka配置（广州uepm-external集群）
+  externalKafka:
+    bootstrap-servers: 10.189.52.123:32024,10.189.52.122:32024,10.189.52.121:32024
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: SCRAM-SHA-256
+    sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username = "uepm-external" password = "kY6Jt1uILWBQk1s8";
+  # 外部系统kafka配置（西咸tingyun-prod集群）
+  xxKafka:
+    bootstrap-servers: 10.172.65.42:32001,10.172.65.41:32001,10.172.65.25:32001,10.172.65.24:32001,10.172.65.22:32001,10.172.65.21:32001,10.172.65.23:32004
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: SCRAM-SHA-256
+    sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username="kafka-new" password="tingyun#2023";
+
+# 业务相关配置
+# 需求：联通APP基础服务弹窗数据推送西咸省分生产区
+basicServicAlert:
+  browserId: 28
+  topic: unicomapp-baseWindow
+# 需求：cBSS关于感知平台功能优化的需求（埋点中包含gdBegavioral:’1’则推送到广州总部生产区uepm-external）
+cbssGdBehavioral:
+  topic: CBSS_GD_BEHAVIORAL_DATA

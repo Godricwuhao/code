@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 日志根目录   -->
+    <springProperty scope="context" name="LOG_HOME" source="logging.path" defaultValue="./log"/>
+    <!-- 日志级别 -->
+    <springProperty scope="context" name="LOG_ROOT_LEVEL" source="logging.level.root" defaultValue="DEBUG"/>
+    <!-- 日志前缀   -->
+    <springProperty scope="context" name="LOG_PREFIX" source="logging.prefix" defaultValue="app_insight"/>
+
+    <!-- 日志文件编码-->
+    <property name="LOG_CHARSET" value="UTF-8"/>
+    <!-- 日志文件路径+日期-->
+    <property name="LOG_DIR" value="${LOG_HOME}/%d{yyyyMMdd}"/>
+    <!--对日志进行格式化-->
+    <!-- <property name="LOG_MSG" value="- | [%X{requestUUID}] | [%d{yyyyMMdd HH:mm:ss.SSS}] | [%level] | [${HOSTNAME}] | [%thread] | [%logger{36}] | --> %msg|%n "/> -->
+    <property name="LOG_MSG" value="- | [%d{yyyyMMdd HH:mm:ss.SSS}] | [%level] | [%logger{36}] | --> %msg|%n "/>
+    <!--文件大小-->
+    <property name="MAX_FILE_SIZE" value="50MB"/>
+    <!-- 配置日志的滚动时间 ，只保留最近7天的日志-->
+    <property name="MAX_HISTORY" value="7"/>
+
+    <!--输出到控制台-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 输出的日志内容格式化-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_MSG}</pattern>
+        </layout>
+    </appender>
+
+    <!-- 定义 DEBUG 日志的输出方式:-->
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志文件路径，日志文件名称-->
+        <File>${LOG_HOME}/debug_${LOG_PREFIX}.log</File>
+        <!-- 设置滚动策略，当天的日志大小超过 ${MAX_FILE_SIZE} 文件大小时候，新的内容写入新的文件-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件路径，新的 DEBUG 日志文件名称，“ i ” 是个变量 -->
+            <!--${log.path}/web-debug-%d{yyyy-MM-dd}.%i.log-->
+            <FileNamePattern>${LOG_DIR}/debug_${LOG_PREFIX}_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <!-- 配置日志的滚动时间 最多15天-->
+            <MaxHistory>${MAX_HISTORY}</MaxHistory>
+            <CleanHistoryOnStart>true</CleanHistoryOnStart>
+            <!--当天的日志大小超过 ${MAX_FILE_SIZE} 文件大小时候，新的内容写入新的文件-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- 输出的日志内容格式化-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_MSG}</pattern>
+        </layout>
+        <!-- 此日志文件只记录debug级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>debug</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 时间滚动输出 INFO level为 INFO 日志 -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/info_${LOG_PREFIX}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_DIR}/info_${LOG_PREFIX}_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxHistory>${MAX_HISTORY}</MaxHistory>
+            <CleanHistoryOnStart>true</CleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_MSG}</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 时间滚动输出 level为 WARN 日志 -->
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/warn_${LOG_PREFIX}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_DIR}/warn_${LOG_PREFIX}_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxHistory>${MAX_HISTORY}</MaxHistory>
+            <CleanHistoryOnStart>true</CleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_MSG}</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>warn</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 定义 ERROR 日志的输出方式:-->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 下面为配置只输出error级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>ACCEPT</OnMatch>
+        </filter>
+        <!--日志文件路径，日志文件名称-->
+        <File>${LOG_HOME}/err_${LOG_PREFIX}.log</File>
+        <!-- 设置滚动策略，当天的日志大小超过 ${MAX_FILE_SIZE} 文件大小时候，新的内容写入新的文件， 默认10MB -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件路径，新的 ERR 日志文件名称，“ i ” 是个变量 -->
+            <FileNamePattern>${LOG_DIR}/err_${LOG_PREFIX}_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <!-- 配置日志的滚动时间-->
+            <MaxHistory>${MAX_HISTORY}</MaxHistory>
+            <CleanHistoryOnStart>true</CleanHistoryOnStart>
+            <!--当天的日志大小超过 ${MAX_FILE_SIZE} 文件大小时候，新的内容写入新的文件-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- 输出的日志内容格式化-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${LOG_MSG}</Pattern>
+        </layout>
+    </appender>
+
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.apache" level="ERROR"/>
+    <logger name="org.mongodb" level="ERROR"/>
+
+    <root level="${LOG_ROOT_LEVEL}">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+
+</configuration>

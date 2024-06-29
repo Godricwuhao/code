@@ -1,0 +1,55 @@
+server:
+  port: 20005
+
+spring:
+  kafka:
+#    # 听云kafka配置
+#    tingyunKafka:
+#      bootstrap-servers: 10.191.208.108:9092,10.191.208.109:9092,10.191.208.107:9092
+#      consumer:
+#        concurrency: 8
+#        topic: brs-bpi-message
+#        group-id: group-smartnote-action
+#        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#        value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+#        security-protocol: SASL_PLAINTEXT
+#        sasl-mechanism: PLAIN
+#        sasl-jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="tingyun" password="nEtben@2_19";
+    # 西咸省分生产区kafka配置
+    xxKafka:
+      bootstrap-servers: 10.172.65.42:32001,10.172.65.41:32001,10.172.65.25:32001,10.172.65.24:32001,10.172.65.22:32001,10.172.65.21:32001,10.172.65.23:32004
+      producer:
+        test-topic: smart_note_bury_some_test
+        prod-topic: smart_note_bury_some_prod
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+        security-protocol: SASL_PLAINTEXT
+        sasl-mechanism: SCRAM-SHA-256
+        sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username="kafka-new" password="tingyun#2023";
+    # 听云kafka配置（2024/06/06 web数据迁移至西咸服务器，改为从西咸服务器进行消费）
+    tingyunKafka:
+      bootstrap-servers: 10.172.65.42:32001,10.172.65.41:32001,10.172.65.25:32001,10.172.65.2mvn clean package -DskipTests4:32001,10.172.65.22:32001,10.172.65.21:32001,10.172.65.23:32004
+      consumer:
+        concurrency: 8
+        topic: brs-bpi-message
+        group-id: group-smartnote-action
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+        security-protocol: SASL_PLAINTEXT
+        sasl-mechanism: SCRAM-SHA-256
+        sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username="kafka-new" password="tingyun#2023";
+
+# 联通公众Web应用ID
+browserId:
+  test:
+    and: 5
+    ios: 6
+  prod:
+    and: 126
+    ios: 125
+
+# 日志
+logging:
+  prefix: smartnote
+  level:
+    root: info

@@ -1,0 +1,46 @@
+server:
+  port: 18091
+
+# 日志配置
+logging:
+  prefix: bpimessage
+  level:
+    root: info
+
+# Kafka相关配置
+kafka:
+  # 听云kafka配置（消费埋点数据）
+  tingyunKafka:
+    bootstrap-servers: tingyun-2:9092
+    concurrency: 8
+    group-id: testnet1
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: PLAIN
+    sasl-jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="tingyun" password="nEtben@2_19";
+  # 外部系统kafka配置（广州uepm-external集群）
+  externalKafka:
+    bootstrap-servers: 10.189.52.123:32024,10.189.52.122:32024,10.189.52.121:32024
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: SCRAM-SHA-256
+    sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username = "uepm-external" password = "kY6Jt1uILWBQk1s8";
+  # 外部系统kafka配置（西咸tingyun-prod集群）
+  xxKafka:
+    bootstrap-servers: 10.125.128.118:32010,10.125.10.51:32028,10.125.128.108:32002
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    security-protocol: SASL_PLAINTEXT
+    sasl-mechanism: SCRAM-SHA-256
+    sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tingyun-kafka-test" password="tingyun#2021";
+
+# 业务相关配置
+# 需求：联通APP基础服务弹窗数据推送西咸省分生产区
+basicServicAlert:
+  browserId: 2
+  topic: smart2push-test
+# 需求：cBSS关于感知平台功能优化的需求（埋点中包含gdBegavioral:’1’则推送到广州总部生产区uepm-external）
+cbssGdBehavioral:
+  topic: CBSS_GD_BEHAVIORAL_DATA_TEST

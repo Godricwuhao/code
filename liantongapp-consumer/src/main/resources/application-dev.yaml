@@ -1,0 +1,46 @@
+server:
+  port: 20004
+
+spring:
+  kafka:
+    # 听云kafka配置
+    tingyunKafka:
+      bootstrap-servers: 10.191.208.108:9092,10.191.208.109:9092,10.191.208.107:9092
+      consumer:
+        topic: q-bpi-ux-action
+        group-id: testnet1
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+        security-protocol: SASL_PLAINTEXT
+        sasl-mechanism: PLAIN
+        sasl-jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="tingyun" password="nEtben@2_19";
+    # 流转测试Kafka配置（西咸测试区）
+    lzptKafkaDev:
+      bootstrap-servers: 10.125.128.118:32010,10.125.10.51:32028,10.125.128.108:32002
+      producer:
+        topic: unicomapp-customAction-test
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+        security-protocol: SASL_PLAINTEXT
+        sasl-mechanism: SCRAM-SHA-256
+        sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tingyun-kafka-test" password="tingyun#2021";
+      tag:
+        test
+    # 流转生产Kafka配置（西咸省分生产区）
+    lzptKafkaProd:
+      bootstrap-servers: 10.172.135.17:32052,10.172.135.20:32031,10.172.135.18:32055,10.172.135.14:32115,10.172.135.22:32115
+      producer:
+        topic: unicomapp-customAction-test
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+        security-protocol: SASL_PLAINTEXT
+        sasl-mechanism: SCRAM-SHA-256
+        sasl-jaas-config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tingyun-prod" password="tingyun#2021";
+      tag:
+        dis
+
+logging:
+  prefix: liantongapp
+  level:
+    root: info
+
